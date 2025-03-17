@@ -12,3 +12,8 @@ build/autodownloader/PYZ-00.pyz
 build/autodownloader/warn-autodownloader.txt
 build/autodownloader/xref-autodownloader.html
 dist/autodownloder_bukidamara_datalogs.exe
+/build
+dist/autodownloader_exe.exe
+dist/autodownloder_bukidamara_datalogs.ex_
+autodownloader_exe.spec
+result/2025-03-17-10000000837b7735.csv
