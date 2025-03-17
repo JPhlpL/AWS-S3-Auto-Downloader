@@ -2,3 +2,13 @@ venv
 .env
 downloaded_json_files
 .codesight
+autodownloader_exe.py
+autodownloader.spec
+*.zip
+*.toc
+*.pkg
+*.pyc
+build/autodownloader/PYZ-00.pyz
+build/autodownloader/warn-autodownloader.txt
+build/autodownloader/xref-autodownloader.html
+dist/autodownloder_bukidamara_datalogs.exe

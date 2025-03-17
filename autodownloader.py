@@ -24,7 +24,6 @@ session = boto3.Session(
 s3_client = session.client('s3')
 
 def download_specific_file(bucket_name, file_key, download_dir):
-
     os.makedirs(download_dir, exist_ok=True)
     local_file_path = os.path.join(download_dir, os.path.basename(file_key))
     
@@ -36,7 +35,6 @@ def download_specific_file(bucket_name, file_key, download_dir):
         logging.error(f"Error downloading file {file_key}: {e}")
 
 def get_date_range(start_date_str, end_date_str):
-
     start_date = datetime.strptime(start_date_str, "%Y-%m-%d")
     end_date = datetime.strptime(end_date_str, "%Y-%m-%d")
     date_list = []
@@ -48,7 +46,6 @@ def get_date_range(start_date_str, end_date_str):
     return date_list
 
 def download_files_by_date_range(bucket_name, device_id, start_date, end_date, download_dir):
-
     os.makedirs(download_dir, exist_ok=True)
     date_range = get_date_range(start_date, end_date)
     
@@ -78,7 +75,6 @@ def download_files_by_date_range(bucket_name, device_id, start_date, end_date, d
                 logging.error(f"Error downloading file {file_key}: {e}")
 
 def process_json_files_to_csv(directory):
-
     # Expected filename format: "YYYY-MM-DD_00-01-18-<sensor_set_id>-sensor-data.json"
     pattern = r"(\d{4}-\d{2}-\d{2})_.*-([0-9A-Za-z]+)-sensor-data\.json"
     
@@ -115,12 +111,23 @@ def process_json_files_to_csv(directory):
             except Exception as e:
                 logging.error(f"Error processing file {filename}: {e}")
 
+def validate(date_text):
+    try:
+        datetime.fromisoformat(date_text)
+    except ValueError:
+        raise ValueError("Incorrect data format, should be YYYY-MM-DD")
+        
 if __name__ == "__main__":
     bucket_name = 'solwer-device-bucket'
     download_dir = './downloaded_json_files'
     
     device_id = os.getenv('DEVICE_ID')
-    start_date = '2025-01-04'
-    end_date = '2025-01-04'
+    print("Enter start date (YYYY-MM-DD):")
+    start_date = input()
+    validate(start_date)
+    print("Enter end date (YYYY-MM-DD):")
+    end_date = input()
+    validate(end_date)
+    
     download_files_by_date_range(bucket_name, device_id, start_date, end_date, download_dir)
     process_json_files_to_csv(download_dir)
